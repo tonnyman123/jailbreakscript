@@ -1,0 +1,21 @@
+local oldHookfunction = hookfunction
+
+hookfunction = function(old, hook)
+    if old == game.HttpGet then
+        return function(self, ...)
+            return
+        end
+    else
+        return oldHookfunction(old, hook)
+    end
+end
+
+local oldSetclipboard = setclipboard
+
+setclipboard = function(...)
+    if string.find(..., "discord") or string.find(..., "github") then
+        oldSetclipboard("https://discord.com/invite/simulator")
+    else
+        oldSetclipboard(...)
+    end
+end
